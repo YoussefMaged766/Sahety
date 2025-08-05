@@ -21,4 +21,11 @@ dependencyResolutionManagement {
 
 rootProject.name = "Sahety"
 include(":app")
- 
+include(":remote")
+include(":local")
+include(":core")
+include(":navigation")
+include(":features:Authentication")
+include(":features:splash")
+include(":core-navigation")
+include(":features:onBoarding")

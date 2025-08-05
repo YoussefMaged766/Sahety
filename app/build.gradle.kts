@@ -1,7 +1,15 @@
+import org.gradle.kotlin.dsl.withType
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serialization)
+
 }
 
 android {
@@ -31,15 +39,28 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
+    tasks.withType<KotlinJvmCompile>().configureEach {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
+            freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
+        }
     }
     buildFeatures {
         compose = true
     }
+    dynamicFeatures += setOf(":features:onBoarding")
 }
 
 dependencies {
+
+
+//    implementation(project(":core"))
+    implementation(project(":navigation"))
+//    implementation(project(":core-navigation"))
+//    implementation(project(":core-navigation"))
+//    implementation(project(":features:splash"))
+//    implementation(project(":features:Authentication"))
+//    implementation(project(":features:onBoarding"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -56,4 +77,30 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Dagger Hilt
+    implementation(libs.dagger.hilt.android)
+    ksp(libs.dagger.hilt.compiler)
+
+    // Retrofit + GSON
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+
+    //logging-interceptor
+    implementation(libs.logging.interceptor)
+    //navigation
+    implementation(libs.hilt.navigation.compose)
+    implementation(libs.androidx.navigation.compose)
+
+    // DataStore
+    implementation(libs.datastore.preferences)
+
+    // serialization
+    implementation(libs.kotlinx.serialization.json)
+
+    // external icons
+    implementation(libs.androidx.material.icons.extended)
+
+    // google play core
+    implementation(libs.feature.delivery.ktx)
 }
