@@ -48,14 +48,16 @@ android {
     buildFeatures {
         compose = true
     }
-    dynamicFeatures += setOf(":features:onBoarding")
 }
 
 dependencies {
 
 
 //    implementation(project(":core"))
-    implementation(project(":navigation"))
+    implementation(project(":core-navigation"))
+    implementation(project(":features:splash"))
+    implementation(project(":features:Authentication"))
+    implementation(project(":features:onBoarding"))
 //    implementation(project(":core-navigation"))
 //    implementation(project(":core-navigation"))
 //    implementation(project(":features:splash"))

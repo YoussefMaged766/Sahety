@@ -14,48 +14,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.devyoussef.core.DynamicModuleDownloadUtil
+
 
 @Composable
 fun OnBoardingScreen(
     modifier: Modifier = Modifier,
     mainNavController: NavController,
-    viewModel: OnboardingViewModel = hiltViewModel() ,
-    navigateToOnBoarding: () -> Unit  ,
+    viewModel: OnboardingViewModel = hiltViewModel(),
+    navigateToOnBoarding: () -> Unit,
     navigateToHome: () -> Unit
 ) {
     val isOnboardingCompleted by viewModel.isOnboardingCompleted().collectAsState(false)
     val context = LocalContext.current
-
-    LaunchedEffect(Unit) {
-        if (!isOnboardingCompleted) {
-            val downloader = DynamicModuleDownloadUtil(
-                context = context,
-                mDynamicDownloadListener = object :
-                    DynamicModuleDownloadUtil.DynamicDownloadListener {
-                    override fun onDynamicModuleDownloaded() {
-                        navigateToOnBoarding()
-                    }
-
-                }
-
-            )
-            if (!downloader.isModuleDownloaded("onBoarding")) {
-                downloader.downloadDynamicModule("onBoarding")
-            } else {
-                navigateToOnBoarding()
-                viewModel.saveOnboardingCompleted()
-            }
-
-        } else {
-//            mainNavController.navigate(Screens.HomeScreen) {
-//                popUpTo(Screens.OnBoardingScreen) {
-//                    inclusive = true
-//                }
-//            }
-            navigateToHome()
-        }
-    }
 
     Text(
         modifier = modifier.fillMaxSize(),
@@ -65,8 +35,8 @@ fun OnBoardingScreen(
     )
 }
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-private fun PreviewOnBoardingScreen() {
-    OnBoardingScreen(mainNavController = rememberNavController() , navigateToOnBoarding = {}, navigateToHome = {})
-}
+//@Preview(showBackground = true, showSystemUi = true)
+//@Composable
+//private fun PreviewOnBoardingScreen() {
+//    OnBoardingScreen(mainNavController = rememberNavController() , navigateToOnBoarding = {}, navigateToHome = {})
+//}

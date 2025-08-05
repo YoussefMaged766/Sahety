@@ -1,11 +1,14 @@
-package com.devyoussef.navigation
+package com.devyoussef.sahety
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptionsBuilder
+import androidx.navigation.PopUpToBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.devyoussef.authentication.HomeScreen
 import com.devyoussef.core_navigation.Screens
+import com.devyoussef.onboarding.OnBoardingScreen
 import com.devyoussef.splash.SplashScreen
 
 
@@ -20,7 +23,7 @@ fun MainNavApp(mainNavController: NavHostController) {
             SplashScreen(mainNavController = mainNavController, navigateToOnBoarding = {
                 mainNavController.navigate(Screens.OnBoardingScreen) {
                     popUpTo(Screens.SplashScreen) {
-                       inclusive = true
+                        inclusive = true
                     }
                 }
             })
@@ -32,7 +35,7 @@ fun MainNavApp(mainNavController: NavHostController) {
             }, navigateToHome = {
                 mainNavController.navigate(Screens.HomeScreen) {
                     popUpTo(Screens.OnBoardingScreen) {
-                       inclusive = true
+                        inclusive = true
                     }
                 }
             })
