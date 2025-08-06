@@ -1,18 +1,11 @@
-import org.gradle.kotlin.dsl.withType
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
-    namespace = "com.devyoussef.onboarding"
+    namespace = "com.devyoussef.designsystem"
     compileSdk = 36
 
     defaultConfig {
@@ -35,17 +28,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    tasks.withType<KotlinJvmCompile>().configureEach {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-            freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
-        }
+    kotlinOptions {
+        jvmTarget = "11"
     }
 }
 
 dependencies {
-
-    implementation(project(":local"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -54,23 +42,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation(libs.androidx.material3)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-
-    // Dagger Hilt
-    implementation(libs.dagger.hilt.android)
-    ksp(libs.dagger.hilt.compiler)
-
-    //navigation
-    implementation(libs.hilt.navigation.compose)
-    implementation(libs.androidx.navigation.compose)
-
-    // DataStore
-    implementation(libs.datastore.preferences)
-
-    // serialization
-    implementation(libs.kotlinx.serialization.json)
 }

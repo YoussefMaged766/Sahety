@@ -5,8 +5,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 }
 
@@ -44,9 +44,6 @@ android {
 
 dependencies {
 
-    implementation(project(":core"))
-//    implementation(project(":core-navigation"))
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -64,10 +61,4 @@ dependencies {
     implementation(libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.compiler)
 
-    //navigation
-    implementation(libs.hilt.navigation.compose)
-    implementation(libs.androidx.navigation.compose)
-
-    // DataStore
-    implementation(libs.datastore.preferences)
 }

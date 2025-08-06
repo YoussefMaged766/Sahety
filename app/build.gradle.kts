@@ -53,16 +53,12 @@ android {
 dependencies {
 
 
-//    implementation(project(":core"))
-    implementation(project(":core-navigation"))
+    implementation(project(":core:navigation"))
     implementation(project(":features:splash"))
     implementation(project(":features:Authentication"))
     implementation(project(":features:onBoarding"))
-//    implementation(project(":core-navigation"))
-//    implementation(project(":core-navigation"))
-//    implementation(project(":features:splash"))
-//    implementation(project(":features:Authentication"))
-//    implementation(project(":features:onBoarding"))
+    implementation(project(":core:designsystem"))
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -84,25 +80,12 @@ dependencies {
     implementation(libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.compiler)
 
-    // Retrofit + GSON
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.gson)
 
-    //logging-interceptor
-    implementation(libs.logging.interceptor)
     //navigation
     implementation(libs.hilt.navigation.compose)
     implementation(libs.androidx.navigation.compose)
 
-    // DataStore
-    implementation(libs.datastore.preferences)
-
     // serialization
     implementation(libs.kotlinx.serialization.json)
 
-    // external icons
-    implementation(libs.androidx.material.icons.extended)
-
-    // google play core
-    implementation(libs.feature.delivery.ktx)
 }
