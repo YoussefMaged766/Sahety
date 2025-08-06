@@ -2,6 +2,7 @@ package com.devyoussef.designsystem.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.dp
 
 val Shapes = Shapes(
@@ -11,3 +12,7 @@ val Shapes = Shapes(
     large = RoundedCornerShape(24.dp),
     extraLarge = RoundedCornerShape(32.dp),
 )
+
+val localCustomShapes = staticCompositionLocalOf {
+    Shapes
+}
