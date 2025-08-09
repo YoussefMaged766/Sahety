@@ -121,7 +121,6 @@ fun SplashScreen(
                     .alpha(imageOpacity.value)
             )
 
-
             AnimatedVisibility(
                 visible = textProgress.value > 0f,
                 enter = fadeIn(tween(300)) + expandHorizontally(expandFrom = Alignment.Start),
@@ -135,8 +134,6 @@ fun SplashScreen(
                     )
                 )
             }
-
-
         }
     }
 }

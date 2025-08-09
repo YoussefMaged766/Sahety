@@ -1,5 +1,3 @@
 <resources>
     <string name="app_name">Sahety</string>
-    <string name="title_onboarding">OnBoardingFeature</string>
-    <string name="title_onboarding1">Intro</string>
 </resources>
