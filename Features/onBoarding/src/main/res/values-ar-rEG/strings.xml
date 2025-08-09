@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="book_your_doctor_in_seconds"> احجز طبيبك في ثوانٍ</string>
+    <string name="all_specialties_in_one_place_choose_from_top_rated_doctors_near_you">
+        جميع التخصصات في مكان واحد، اختر من بين أفضل الأطباء بالقرب منك</string>
+    <string name="your_care_starts_with_one_tap"> رعايتك تبدأ بنقرة واحدة</string>
+    <string name="search_book_and_follow_up_all_in_one_app"> ابحث، احجز وتابع كل شيء في تطبيق واحد</string>
+    <string name="your_health_matters_most_anytime"> صحتك تهم أكثر في أي وقت</string>
+    <string name="we_connect_you_to_the_best_doctors_quickly_and_effortlessly"> نحن نوصل لك أفضل الأطباء بسرعة وسهولة</string>
+</resources>

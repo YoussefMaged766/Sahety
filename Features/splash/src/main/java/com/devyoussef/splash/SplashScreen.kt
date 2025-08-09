@@ -98,7 +98,7 @@ fun SplashScreen(
         )
 
         delay(1000)
-//        navigateToOnBoarding()
+        navigateToOnBoarding()
     }
 
     Box(
