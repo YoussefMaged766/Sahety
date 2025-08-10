@@ -1,8 +1,16 @@
 package com.devyoussef.onboarding
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,6 +18,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -32,6 +41,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -64,101 +74,123 @@ fun OnBoardingScreen(
     navigateToOnBoarding: () -> Unit,
     navigateToHome: () -> Unit
 ) {
-    val isOnboardingCompleted by viewModel.isOnboardingCompleted().collectAsState(false)
-    val context = LocalContext.current
+    val pagerState = remember { mutableIntStateOf(0) }
+    val currentPage = pagerState.intValue
+    val direction = remember { mutableIntStateOf(1) } // 1 for next, -1 for previous
 
-    val pagerState = rememberPagerState { 3 }
+
     val coroutineScope = rememberCoroutineScope()
 
     val onBoardingItems = listOf(
         OnBoardingModel(
-            image = R.drawable.onboarding_img1,
-            title = stringResource(R.string.book_your_doctor_in_seconds),
-            description = stringResource(R.string.all_specialties_in_one_place_choose_from_top_rated_doctors_near_you)
+            R.drawable.onboarding_img1,
+            stringResource(R.string.book_your_doctor_in_seconds),
+            stringResource(R.string.all_specialties_in_one_place_choose_from_top_rated_doctors_near_you)
         ),
         OnBoardingModel(
-            image = R.drawable.onboarding_img2,
-            title = stringResource(R.string.your_care_starts_with_one_tap),
-            description = stringResource(R.string.search_book_and_follow_up_all_in_one_app)
+            R.drawable.onboarding_img2,
+            stringResource(R.string.your_care_starts_with_one_tap),
+            stringResource(R.string.search_book_and_follow_up_all_in_one_app)
         ),
         OnBoardingModel(
-            image = R.drawable.onboarding_img3,
-            title = stringResource(R.string.your_health_matters_most_anytime),
-            description = stringResource(R.string.we_connect_you_to_the_best_doctors_quickly_and_effortlessly)
+            R.drawable.onboarding_img3,
+            stringResource(R.string.your_health_matters_most_anytime),
+            stringResource(R.string.we_connect_you_to_the_best_doctors_quickly_and_effortlessly)
         )
     )
 
+    Scaffold { innerPadding ->
+        Column(
+            modifier = modifier
+                .background(SahetyTheme.colors.bgColor)
+                .padding(innerPadding)
+                .padding(horizontal = 18.dp)
+                .fillMaxSize()
+        ) {
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
 
-    OnBoardingPager(
-        items = onBoardingItems, state = pagerState, modifier = modifier
-            .fillMaxSize(),
-        coroutineScope = coroutineScope,
-        onNextClick = {
-            coroutineScope.launch {
-                if (pagerState.currentPage < onBoardingItems.size - 1) {
-                    pagerState.animateScrollToPage(pagerState.currentPage + 1)
-                } else {
-//                    mainNavController.navigate(Screens.GetStartedScreen)
-                }
+                OnboardPage(page = onBoardingItems[currentPage], direction = direction.intValue)
             }
+
+            OnBoardingBottomScreen(
+                currentPage = currentPage,
+                coroutineScope = coroutineScope,
+                items = onBoardingItems,
+                onNextClick = {
+                    coroutineScope.launch {
+                        if (pagerState.intValue < onBoardingItems.size - 1) {
+                            direction.intValue = 1
+                            pagerState.intValue += 1
+                        } else {
+                            // Navigate to next screen
+//                            navigateToHome()
+                        }
+                    }
+                },
+                onPreviousClick = {
+                    coroutineScope.launch {
+                        if (pagerState.intValue > 0) {
+                            direction.intValue = -1
+                            pagerState.intValue -= 1
+                        }
+                    }
+                }
+            )
         }
-    )
+    }
 }
 
+
 @Composable
-fun OnBoardingPager(
-    items: List<OnBoardingModel>,
-    state: PagerState,
+fun OnboardPage(
     modifier: Modifier = Modifier,
-    coroutineScope: CoroutineScope,
-    onNextClick: () -> Unit = {}
-
+    page: OnBoardingModel,
+    direction: Int // pass it here
 ) {
-    Scaffold { innerPadding ->
-
-        HorizontalPager(
-            state = state,
-            userScrollEnabled = false
-        ) { page ->
-
-            val currentPageOffset = (
-                    (state.currentPage - page) + state.currentPageOffsetFraction
-                    ).absoluteValue
-
-            // Fade only current/nearby page, 0 = fully visible, 1+ = invisible
-            val alpha = 1f - currentPageOffset.coerceIn(0f, 1f)
-
-            Box(
-                modifier = modifier.background(
-                    SahetyTheme.colors.bgColor
-                )
-            ) {
-
-                Image(
-                    painter = painterResource(items[page].image),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.Center),
-                    contentScale = ContentScale.Crop,
-                    contentDescription = null
-                )
-
-
-            }
-        }
-
-        Box(modifier = modifier) {
-            Column(
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // Fade in image only
+        Crossfade(targetState = page.image, label = "ImageCrossfade") { imageRes ->
+            Image(
+                painter = painterResource(imageRes),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .padding(innerPadding)
-                    .padding(bottom = 30.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top
-            ) {
+                    .aspectRatio(1f),
+                contentScale = ContentScale.Fit,
+                contentDescription = null
+            )
+        }
+
+        Spacer(modifier = Modifier.height(40.dp))
+
+        // Animate title + description using AnimatedContent
+        AnimatedContent(
+            targetState = Pair(page.title, page.description),
+            transitionSpec = {
+                val slideOffset =
+                    if (direction >= 0) { height: Int -> height } else { height: Int -> -height }
+
+                slideInVertically(
+                    animationSpec = tween(300),
+                    initialOffsetY = slideOffset
+                ) + fadeIn() togetherWith
+                        slideOutVertically(
+                            animationSpec = tween(300),
+                            targetOffsetY = slideOffset
+                        ) + fadeOut()
+            },
+            label = "TextSlideTransition"
+        ) { (title, description) ->
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = items[state.currentPage].title,
+                    text = title,
                     modifier = Modifier.fillMaxWidth(),
                     color = SahetyTheme.colors.primaryText,
                     fontSize = 24.sp,
@@ -169,82 +201,85 @@ fun OnBoardingPager(
                 Spacer(modifier = Modifier.height(18.dp))
 
                 Text(
-                    text = items[state.currentPage].description,
+                    text = description,
                     modifier = Modifier.fillMaxWidth(),
                     color = SahetyTheme.colors.secondaryText,
                     fontSize = 18.sp,
                     textAlign = TextAlign.Center,
                     fontFamily = FontFamily(Font(resId = com.devyoussef.designsystem.R.font.nunito_regular))
                 )
+            }
+        }
 
-                Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(20.dp))
+    }
+}
 
 
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 18.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    // Left Section (Previous)
-                    Box(
-                        modifier = Modifier
-                            .weight(1f),
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        if (state.currentPage > 0) {
-                            TextButton(
-                                onClick = {
-                                    coroutineScope.launch {
-                                        state.animateScrollToPage(state.currentPage - 1)
-                                    }
-                                }
-                            ) {
-                                Icon(
-                                    Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
-                                    contentDescription = null,
-                                    tint = SahetyTheme.colors.secondaryText
-                                )
-                                Text(
-                                    text = "Previous",
-                                    modifier = Modifier.padding(start = 4.dp),
-                                    color = SahetyTheme.colors.secondaryText
-                                )
-                            }
-                        }
-                    }
-                    PageIndicator(modifier= Modifier.weight(1f),currentPage = state.currentPage, items = items)
-                    // Right Section (Next)
-                    Box(
-                        modifier = Modifier
-                            .weight(1f),
-                        contentAlignment = Alignment.CenterEnd
-                    ) {
-                        TextButton(
-                            onClick = { onNextClick() }
-                        ) {
-                            Text(
-                                text = "Next",
-                                modifier = Modifier.padding(end = 4.dp),
-                                color = SahetyTheme.colors.primaryContainer
-                            )
-                            Icon(
-                                Icons.AutoMirrored.Rounded.KeyboardArrowRight,
-                                contentDescription = null,
-                                tint = SahetyTheme.colors.primaryContainer
-                            )
-                        }
-                    }
+@Composable
+fun OnBoardingBottomScreen(
+    modifier: Modifier = Modifier,
+    onNextClick: () -> Unit = {},
+    onPreviousClick: () -> Unit = {},
+    currentPage: Int,
+    items: List<OnBoardingModel>,
+    coroutineScope: CoroutineScope
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 18.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.CenterStart
+        ) {
+            if (currentPage > 0) {
+                TextButton(onClick = onPreviousClick) {
+                    Icon(
+                        Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
+                        contentDescription = null,
+                        tint = SahetyTheme.colors.secondaryText
+                    )
+                    Text(
+                        text = "Previous",
+                        modifier = Modifier.padding(start = 4.dp),
+                        color = SahetyTheme.colors.secondaryText
+                    )
                 }
+            }
+        }
 
+        PageIndicator(
+            modifier = Modifier.weight(1f),
+            currentPage = currentPage,
+            items = items
+        )
+
+        Box(
+            modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.CenterEnd
+        ) {
+            TextButton(onClick = onNextClick) {
+                Text(
+                    text = "Next",
+                    modifier = Modifier.padding(end = 4.dp),
+                    color = SahetyTheme.colors.primaryContainer
+                )
+                Icon(
+                    Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                    contentDescription = null,
+                    tint = SahetyTheme.colors.primaryContainer
+                )
             }
         }
     }
 }
 
+
 @Composable
-fun PageIndicator( modifier: Modifier,currentPage: Int, items: List<OnBoardingModel>) {
+fun PageIndicator(modifier: Modifier, currentPage: Int, items: List<OnBoardingModel>) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
