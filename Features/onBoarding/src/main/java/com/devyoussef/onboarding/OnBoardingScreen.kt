@@ -123,7 +123,6 @@ fun OnBoardingScreen(
 
             OnBoardingBottomScreen(
                 currentPage = currentPage,
-                coroutineScope = coroutineScope,
                 items = onBoardingItems,
                 onNextClick = {
                     coroutineScope.launch {
@@ -174,24 +173,6 @@ fun OnboardPage(
 
         Spacer(modifier = Modifier.height(40.dp))
 
-        // Animate title + description using AnimatedContent
-//        AnimatedContent(
-//            targetState = Pair(page.title, page.description),
-//            transitionSpec = {
-//                val slideOffset =
-//                    if (direction >= 0) { height: Int -> height } else { height: Int -> -height }
-//
-//                slideInVertically(
-//                    animationSpec = tween(300),
-//                    initialOffsetY = slideOffset
-//                ) + fadeIn() togetherWith
-//                        slideOutVertically(
-//                            animationSpec = tween(300),
-//                            targetOffsetY = slideOffset
-//                        ) + fadeOut()
-//            },
-//            label = "TextSlideTransition"
-//        ) { (title, description) ->
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
             AnimatedContent(page.title, transitionSpec = {
@@ -256,8 +237,7 @@ fun OnBoardingBottomScreen(
     onNextClick: () -> Unit = {},
     onPreviousClick: () -> Unit = {},
     currentPage: Int,
-    items: List<OnBoardingModel>,
-    coroutineScope: CoroutineScope
+    items: List<OnBoardingModel>
 ) {
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
