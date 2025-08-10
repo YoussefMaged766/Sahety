@@ -7,4 +7,6 @@
     <string name="search_book_and_follow_up_all_in_one_app"> ابحث، احجز وتابع كل شيء في تطبيق واحد</string>
     <string name="your_health_matters_most_anytime"> صحتك تهم أكثر في أي وقت</string>
     <string name="we_connect_you_to_the_best_doctors_quickly_and_effortlessly"> نحن نوصل لك أفضل الأطباء بسرعة وسهولة</string>
+    <string name="previous"> السابق</string>
+    <string name="next"> التالي</string>
 </resources>

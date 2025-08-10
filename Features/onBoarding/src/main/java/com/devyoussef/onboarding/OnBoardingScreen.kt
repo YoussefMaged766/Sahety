@@ -13,6 +13,7 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,6 +39,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -51,11 +53,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -195,11 +199,11 @@ fun OnboardPage(
                     if (direction >= 0) { height: Int -> height } else { height: Int -> -height }
 
                 slideInVertically(
-                    animationSpec = tween(300),
+                    animationSpec = tween(500),
                     initialOffsetY = slideOffset
                 ) + fadeIn() togetherWith
                         slideOutVertically(
-                            animationSpec = tween(300),
+                            animationSpec = tween(500),
                             targetOffsetY = slideOffset
                         ) + fadeOut()
             }) { title ->
@@ -220,11 +224,11 @@ fun OnboardPage(
                     if (direction >= 0) { height: Int -> height } else { height: Int -> -height }
 
                 slideInVertically(
-                    animationSpec = tween(300),
+                    animationSpec = tween(500),
                     initialOffsetY = slideOffset
                 ) + fadeIn() togetherWith
                         slideOutVertically(
-                            animationSpec = tween(300),
+                            animationSpec = tween(500),
                             targetOffsetY = slideOffset
                         ) + fadeOut()
             }) { description ->
@@ -255,55 +259,59 @@ fun OnBoardingBottomScreen(
     items: List<OnBoardingModel>,
     coroutineScope: CoroutineScope
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Box(
-            modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.CenterStart
+
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            if (currentPage > 0) {
-                TextButton(onClick = onPreviousClick) {
-                    Icon(
-                        Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
-                        contentDescription = null,
-                        tint = SahetyTheme.colors.secondaryText
-                    )
+            Box(
+                modifier = Modifier.weight(1f),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                if (currentPage > 0) {
+                    TextButton(onClick = onPreviousClick) {
+                        Icon(
+                            Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
+                            contentDescription = null,
+                            tint = SahetyTheme.colors.secondaryText
+                        )
+                        Text(
+                            text = stringResource(R.string.previous),
+                            modifier = Modifier.padding(start = 4.dp),
+                            color = SahetyTheme.colors.secondaryText
+                        )
+                    }
+                }
+            }
+
+            PageIndicator(
+                modifier = Modifier.weight(1f),
+                currentPage = currentPage,
+                items = items
+            )
+
+            Box(
+                modifier = Modifier.weight(1f),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                TextButton(onClick = onNextClick) {
                     Text(
-                        text = "Previous",
-                        modifier = Modifier.padding(start = 4.dp),
-                        color = SahetyTheme.colors.secondaryText
+                        text = stringResource(R.string.next),
+                        modifier = Modifier.padding(end = 4.dp),
+                        color = SahetyTheme.colors.primaryContainer
+                    )
+                    Icon(
+                        Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                        contentDescription = null,
+                        tint = SahetyTheme.colors.primaryContainer
                     )
                 }
             }
         }
-
-        PageIndicator(
-            modifier = Modifier.weight(1f),
-            currentPage = currentPage,
-            items = items
-        )
-
-        Box(
-            modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.CenterEnd
-        ) {
-            TextButton(onClick = onNextClick) {
-                Text(
-                    text = "Next",
-                    modifier = Modifier.padding(end = 4.dp),
-                    color = SahetyTheme.colors.primaryContainer
-                )
-                Icon(
-                    Icons.AutoMirrored.Rounded.KeyboardArrowRight,
-                    contentDescription = null,
-                    tint = SahetyTheme.colors.primaryContainer
-                )
-            }
-        }
     }
+
 }
 
 
