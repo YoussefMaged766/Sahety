@@ -171,9 +171,26 @@ fun OnboardPage(
         Spacer(modifier = Modifier.height(40.dp))
 
         // Animate title + description using AnimatedContent
-        AnimatedContent(
-            targetState = Pair(page.title, page.description),
-            transitionSpec = {
+//        AnimatedContent(
+//            targetState = Pair(page.title, page.description),
+//            transitionSpec = {
+//                val slideOffset =
+//                    if (direction >= 0) { height: Int -> height } else { height: Int -> -height }
+//
+//                slideInVertically(
+//                    animationSpec = tween(300),
+//                    initialOffsetY = slideOffset
+//                ) + fadeIn() togetherWith
+//                        slideOutVertically(
+//                            animationSpec = tween(300),
+//                            targetOffsetY = slideOffset
+//                        ) + fadeOut()
+//            },
+//            label = "TextSlideTransition"
+//        ) { (title, description) ->
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
+            AnimatedContent(page.title, transitionSpec = {
                 val slideOffset =
                     if (direction >= 0) { height: Int -> height } else { height: Int -> -height }
 
@@ -185,10 +202,7 @@ fun OnboardPage(
                             animationSpec = tween(300),
                             targetOffsetY = slideOffset
                         ) + fadeOut()
-            },
-            label = "TextSlideTransition"
-        ) { (title, description) ->
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            }) { title ->
                 Text(
                     text = title,
                     modifier = Modifier.fillMaxWidth(),
@@ -197,9 +211,23 @@ fun OnboardPage(
                     textAlign = TextAlign.Center,
                     fontFamily = FontFamily(Font(resId = com.devyoussef.designsystem.R.font.nunito_bold))
                 )
+            }
 
-                Spacer(modifier = Modifier.height(18.dp))
 
+            Spacer(modifier = Modifier.height(18.dp))
+            AnimatedContent(page.description, transitionSpec = {
+                val slideOffset =
+                    if (direction >= 0) { height: Int -> height } else { height: Int -> -height }
+
+                slideInVertically(
+                    animationSpec = tween(300),
+                    initialOffsetY = slideOffset
+                ) + fadeIn() togetherWith
+                        slideOutVertically(
+                            animationSpec = tween(300),
+                            targetOffsetY = slideOffset
+                        ) + fadeOut()
+            }) { description ->
                 Text(
                     text = description,
                     modifier = Modifier.fillMaxWidth(),
@@ -209,7 +237,9 @@ fun OnboardPage(
                     fontFamily = FontFamily(Font(resId = com.devyoussef.designsystem.R.font.nunito_regular))
                 )
             }
+
         }
+//        }
 
         Spacer(modifier = Modifier.height(20.dp))
     }
@@ -227,8 +257,7 @@ fun OnBoardingBottomScreen(
 ) {
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 18.dp),
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
