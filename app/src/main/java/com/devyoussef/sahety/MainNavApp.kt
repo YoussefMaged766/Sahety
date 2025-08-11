@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.devyoussef.authentication.HomeScreen
 import com.devyoussef.core_navigation.Screens
+import com.devyoussef.onboarding.IntroScreen
 import com.devyoussef.onboarding.OnBoardingScreen
 import com.devyoussef.splash.SplashScreen
 
@@ -30,13 +31,17 @@ fun MainNavApp(mainNavController: NavHostController) {
         composable<Screens.OnBoardingScreen> {
             OnBoardingScreen( navigateToOnBoarding = {
                 mainNavController.navigate(Screens.OnBoardingScreen)
-            }, navigateToHome = {
-                mainNavController.navigate(Screens.HomeScreen) {
+            }, navigateToIntro = {
+                mainNavController.navigate(Screens.IntroScreen) {
                     popUpTo(Screens.OnBoardingScreen) {
                         inclusive = true
                     }
                 }
             })
+        }
+
+        composable<Screens.IntroScreen> {
+            IntroScreen()
         }
 
 

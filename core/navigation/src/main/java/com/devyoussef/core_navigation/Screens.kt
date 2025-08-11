@@ -11,6 +11,9 @@ sealed class Screens {
     data object OnBoardingScreen : Screens()
 
     @Serializable
+    data object IntroScreen : Screens()
+
+    @Serializable
     data object HomeScreen : Screens()
 
 }

@@ -76,7 +76,7 @@ fun OnBoardingScreen(
     modifier: Modifier = Modifier,
     viewModel: OnboardingViewModel = hiltViewModel(),
     navigateToOnBoarding: () -> Unit,
-    navigateToHome: () -> Unit
+    navigateToIntro: () -> Unit
 ) {
     val pagerState = remember { mutableIntStateOf(0) }
     val currentPage = pagerState.intValue
@@ -131,7 +131,7 @@ fun OnBoardingScreen(
                             pagerState.intValue += 1
                         } else {
                             // Navigate to next screen
-//                            navigateToHome()
+                      navigateToIntro()
                         }
                     }
                 },
