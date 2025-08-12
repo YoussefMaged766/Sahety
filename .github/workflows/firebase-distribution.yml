@@ -35,6 +35,8 @@ jobs:
         run: |
           echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > app/google-services.json
 
+      - name: Clean Gradle
+        run: ./gradlew clean
 
       # Build Debug APK
       - name: Build Debug APK
