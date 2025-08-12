@@ -48,7 +48,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devyoussef.designsystem.theme.SahetyTheme
-import com.devyoussef.features.onboarding.R
+import com.devyoussef.onboarding.R
 
 @Composable
 fun IntroScreen(modifier: Modifier = Modifier , onNavigateToSignUp: () -> Unit = {}) {
@@ -68,7 +68,7 @@ fun IntroScreen(modifier: Modifier = Modifier , onNavigateToSignUp: () -> Unit =
         ) {
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                 Image(
-                    painter = painterResource(com.devyoussef.core.designsystem.R.drawable.ic_logo),
+                    painter = painterResource(com.devyoussef.designsystem.R.drawable.ic_logo),
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxSize()
@@ -91,7 +91,7 @@ fun IntroScreen(modifier: Modifier = Modifier , onNavigateToSignUp: () -> Unit =
                     text = stringResource(R.string.your_health_journey_starts_here),
                     fontSize = 32.sp,
                     color = Color.White,
-                    fontFamily = FontFamily(Font(resId = com.devyoussef.core.designsystem.R.font.nunito_bold)),
+                    fontFamily = FontFamily(Font(resId = com.devyoussef.designsystem.R.font.nunito_bold)),
                 )
                 Image(
                     painter = painterResource(R.drawable.img_intro),
@@ -137,7 +137,7 @@ fun IntroScreen(modifier: Modifier = Modifier , onNavigateToSignUp: () -> Unit =
                             text = stringResource(R.string.sign_in), style = TextStyle(
                                 fontSize = 16.sp,
                                 color = SahetyTheme.colors.primaryContainer,
-                                fontFamily = FontFamily(Font(resId = com.devyoussef.core.designsystem.R.font.nunito_regular))
+                                fontFamily = FontFamily(Font(resId = com.devyoussef.designsystem.R.font.nunito_regular))
                             )
                         )
                     }
@@ -164,7 +164,7 @@ fun IntroScreen(modifier: Modifier = Modifier , onNavigateToSignUp: () -> Unit =
                             text = stringResource(R.string.sign_up), style = TextStyle(
                                 fontSize = 16.sp,
                                 color = Color.White,
-                                fontFamily = FontFamily(Font(resId = com.devyoussef.core.designsystem.R.font.nunito_regular))
+                                fontFamily = FontFamily(Font(resId = com.devyoussef.designsystem.R.font.nunito_regular))
                             )
                         )
                     }

@@ -10,7 +10,7 @@ plugins {
 }
 
 android {
-    namespace = "com.devyoussef.core.core_navigation"
+    namespace = "com.devyoussef.core_navigation"
     compileSdk = 36
 
     defaultConfig {
