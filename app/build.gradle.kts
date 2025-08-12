@@ -43,6 +43,7 @@ android {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
             freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
+
         }
     }
     buildFeatures {
