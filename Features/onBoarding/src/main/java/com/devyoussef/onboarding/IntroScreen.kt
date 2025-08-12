@@ -25,6 +25,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -35,6 +36,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -42,6 +44,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devyoussef.designsystem.theme.SahetyTheme
@@ -62,21 +65,21 @@ fun IntroScreen(modifier: Modifier = Modifier , onNavigateToSignUp: () -> Unit =
                 .fillMaxSize()
                 .background(SahetyTheme.colors.primaryContainer)
         ) {
-
-            Image(
-                painter = painterResource(com.devyoussef.designsystem.R.drawable.ic_logo),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxSize()
+            CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+                Image(
+                    painter = painterResource(com.devyoussef.designsystem.R.drawable.ic_logo),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxSize()
 //                    .offset(x = (-100).dp, y = (140).dp)
 //                    .offset(x = screenWidthDp * 0.04f, y = screenHeightDp * 0.13f)
-                    .offset(x = -screenWidthDp * 0.21f, y = -screenHeightDp * 0.08f)
-                    .rotate(23f),
-                colorFilter = ColorFilter.tint(Color(0xff06FF75).copy(alpha = 0.3f)),
-                contentScale = ContentScale.Fit
+                        .offset(x = -screenWidthDp * 0.21f, y = -screenHeightDp * 0.08f)
+                        .rotate(23f),
+                    colorFilter = ColorFilter.tint(Color(0xff06FF75).copy(alpha = 0.3f)),
+                    contentScale = ContentScale.Fit
 
-            )
-
+                )
+            }
             Column(
                 modifier = Modifier
                     .fillMaxSize()
