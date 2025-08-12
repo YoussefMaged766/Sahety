@@ -78,30 +78,29 @@ fun OnBoardingScreen(
     navigateToOnBoarding: () -> Unit,
     navigateToIntro: () -> Unit
 ) {
-    val pagerState = remember { mutableIntStateOf(0) }
-    val currentPage = pagerState.intValue
-    val direction = remember { mutableIntStateOf(1) } // 1 for next, -1 for previous
+    val currentPageIndex by viewModel.currentPageIndex
+    val direction by viewModel.direction
 
 
-    val coroutineScope = rememberCoroutineScope()
-
-    val onBoardingItems = listOf(
-        OnBoardingModel(
-            R.drawable.onboarding_img1,
-            stringResource(R.string.book_your_doctor_in_seconds),
-            stringResource(R.string.all_specialties_in_one_place_choose_from_top_rated_doctors_near_you)
-        ),
-        OnBoardingModel(
-            R.drawable.onboarding_img2,
-            stringResource(R.string.your_care_starts_with_one_tap),
-            stringResource(R.string.search_book_and_follow_up_all_in_one_app)
-        ),
-        OnBoardingModel(
-            R.drawable.onboarding_img3,
-            stringResource(R.string.your_health_matters_most_anytime),
-            stringResource(R.string.we_connect_you_to_the_best_doctors_quickly_and_effortlessly)
+    val onBoardingItems = remember {
+        listOf(
+            OnBoardingModel(
+                R.drawable.onboarding_img1,
+                R.string.book_your_doctor_in_seconds,
+                R.string.all_specialties_in_one_place_choose_from_top_rated_doctors_near_you
+            ),
+            OnBoardingModel(
+                R.drawable.onboarding_img2,
+                R.string.your_care_starts_with_one_tap,
+                R.string.search_book_and_follow_up_all_in_one_app
+            ),
+            OnBoardingModel(
+                R.drawable.onboarding_img3,
+                R.string.your_health_matters_most_anytime,
+                R.string.we_connect_you_to_the_best_doctors_quickly_and_effortlessly
+            )
         )
-    )
+    }
 
     Scaffold { innerPadding ->
         Column(
@@ -118,30 +117,17 @@ fun OnBoardingScreen(
                 contentAlignment = Alignment.Center
             ) {
 
-                OnboardPage(page = onBoardingItems[currentPage], direction = direction.intValue)
+                OnboardPage(page = onBoardingItems[currentPageIndex], direction = direction)
             }
 
             OnBoardingBottomScreen(
-                currentPage = currentPage,
+                currentPage = currentPageIndex,
                 items = onBoardingItems,
                 onNextClick = {
-                    coroutineScope.launch {
-                        if (pagerState.intValue < onBoardingItems.size - 1) {
-                            direction.intValue = 1
-                            pagerState.intValue += 1
-                        } else {
-                            // Navigate to next screen
-                      navigateToIntro()
-                        }
-                    }
+                    viewModel.handleNextClick(onBoardingItems.size , navigateToIntro)
                 },
                 onPreviousClick = {
-                    coroutineScope.launch {
-                        if (pagerState.intValue > 0) {
-                            direction.intValue = -1
-                            pagerState.intValue -= 1
-                        }
-                    }
+                    viewModel.previousPage()
                 }
             )
         }
@@ -189,7 +175,7 @@ fun OnboardPage(
                         ) + fadeOut()
             }) { title ->
                 Text(
-                    text = title,
+                    text =stringResource(title) ,
                     modifier = Modifier.fillMaxWidth(),
                     color = SahetyTheme.colors.primaryText,
                     fontSize = 24.sp,
@@ -214,7 +200,7 @@ fun OnboardPage(
                         ) + fadeOut()
             }) { description ->
                 Text(
-                    text = description,
+                    text =stringResource(description) ,
                     modifier = Modifier.fillMaxWidth(),
                     color = SahetyTheme.colors.secondaryText,
                     fontSize = 18.sp,
