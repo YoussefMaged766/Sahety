@@ -44,5 +44,5 @@ jobs:
         run: |
           firebase appdistribution:distribute app/build/outputs/apk/debug/app-debug.apk \
             --app <com.devyoussef.sahety> \
-            --groups "testers" \
+            --groups "Sahety" \
             --token ${{ secrets.FIREBASE_TOKEN }}
