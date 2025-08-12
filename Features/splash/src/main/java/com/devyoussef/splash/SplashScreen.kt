@@ -48,7 +48,7 @@ fun SplashScreen(
     val textProgress = remember { Animatable(0f) }
     val textAlpha = remember { Animatable(0f) }
 
-    val appTitle = stringResource(com.devyoussef.splash.R.string.sehaty)
+    val appTitle = stringResource(com.devyoussef.features.splash.R.string.sehaty)
 
     // Build animated text
     val animatedText = buildAnnotatedString {
