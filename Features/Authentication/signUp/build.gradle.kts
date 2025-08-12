@@ -11,7 +11,7 @@ plugins {
 }
 
 android {
-    namespace = "com.devyoussef.signup"
+    namespace = "com.devyoussef.features.Authentication.signup"
     compileSdk = 36
 
     defaultConfig {

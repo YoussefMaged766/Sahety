@@ -12,7 +12,7 @@ plugins {
 }
 
 android {
-    namespace = "com.devyoussef.onboarding"
+    namespace = "com.devyoussef.features.onboarding"
     compileSdk = 36
 
     defaultConfig {

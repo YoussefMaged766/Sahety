@@ -22,10 +22,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.devyoussef.sahety" />
+                  <option name="mobileSdkAppId" value="1:672170685735:android:4bc811d92674eeee30e502" />
+                  <option name="projectId" value="sahety-d5389" />
+                  <option name="projectNumber" value="672170685735" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

@@ -34,7 +34,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.devyoussef.designsystem.R
+import com.devyoussef.core.designsystem.R
+
 import com.devyoussef.designsystem.theme.SahetyTheme
 import kotlinx.coroutines.delay
 

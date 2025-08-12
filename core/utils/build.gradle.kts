@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.devyoussef.utils"
+    namespace = "com.devyoussef.core.utils"
     compileSdk = 36
 
     defaultConfig {
