@@ -40,6 +40,7 @@ fun MainNavApp(mainNavController: NavHostController) {
             })
         }
 
+
         composable<Screens.SignUpScreen> {
             SignUpScreen()
         }
