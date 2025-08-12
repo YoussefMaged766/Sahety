@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.devyoussef.authentication.HomeScreen
 import com.devyoussef.core_navigation.Screens
 import com.devyoussef.onboarding.IntroScreen
 import com.devyoussef.onboarding.OnBoardingScreen
+import com.devyoussef.signup.SignUpScreen
 import com.devyoussef.splash.SplashScreen
 
 
@@ -19,7 +19,7 @@ fun MainNavApp(mainNavController: NavHostController) {
         startDestination = Screens.SplashScreen
     ) {
         composable<Screens.SplashScreen> {
-            SplashScreen( navigateToOnBoarding = {
+            SplashScreen(navigateToOnBoarding = {
                 mainNavController.navigate(Screens.OnBoardingScreen) {
                     popUpTo(Screens.SplashScreen) {
                         inclusive = true
@@ -29,7 +29,7 @@ fun MainNavApp(mainNavController: NavHostController) {
         }
 
         composable<Screens.OnBoardingScreen> {
-            OnBoardingScreen( navigateToOnBoarding = {
+            OnBoardingScreen(navigateToOnBoarding = {
                 mainNavController.navigate(Screens.OnBoardingScreen)
             }, navigateToIntro = {
                 mainNavController.navigate(Screens.IntroScreen) {
@@ -40,14 +40,20 @@ fun MainNavApp(mainNavController: NavHostController) {
             })
         }
 
+        composable<Screens.SignUpScreen> {
+            SignUpScreen()
+        }
+
         composable<Screens.IntroScreen> {
-            IntroScreen()
+            IntroScreen(
+                onNavigateToSignUp = {
+                    mainNavController.navigate(Screens.SignUpScreen)
+                }
+            )
         }
 
 
-        composable<Screens.HomeScreen> {
-            HomeScreen()
-        }
+
     }
 
 }

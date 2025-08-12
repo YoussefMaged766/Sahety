@@ -9,4 +9,7 @@
     <string name="we_connect_you_to_the_best_doctors_quickly_and_effortlessly"> نحن نوصل لك أفضل الأطباء بسرعة وسهولة</string>
     <string name="previous"> السابق</string>
     <string name="next"> التالي</string>
+    <string name="your_health_journey_starts_here"> رحلة صحتك \nتبدأمن هنا</string>
+    <string name="sign_in"> تسجيل الدخول</string>
+    <string name="sign_up"> تسجيل جديد</string>
 </resources>

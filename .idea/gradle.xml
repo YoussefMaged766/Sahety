@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/core/utils" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/Authentication" />
+            <option value="$PROJECT_DIR$/features/Authentication/signUp" />
             <option value="$PROJECT_DIR$/features/onBoarding" />
             <option value="$PROJECT_DIR$/features/splash" />
             <option value="$PROJECT_DIR$/local" />

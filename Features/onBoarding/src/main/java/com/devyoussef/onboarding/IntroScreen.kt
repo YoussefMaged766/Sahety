@@ -37,6 +37,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -46,7 +47,7 @@ import androidx.compose.ui.unit.sp
 import com.devyoussef.designsystem.theme.SahetyTheme
 
 @Composable
-fun IntroScreen(modifier: Modifier = Modifier) {
+fun IntroScreen(modifier: Modifier = Modifier , onNavigateToSignUp: () -> Unit = {}) {
 
     val windowInfo = LocalWindowInfo.current
     val density = LocalDensity.current
@@ -83,7 +84,7 @@ fun IntroScreen(modifier: Modifier = Modifier) {
             ) {
                 Text(
                     modifier = Modifier.padding(top = 30.dp, start = 18.dp),
-                    text = "Your Health \nJourney Starts Here",
+                    text = stringResource(R.string.your_health_journey_starts_here),
                     fontSize = 32.sp,
                     color = Color.White,
                     fontFamily = FontFamily(Font(resId = com.devyoussef.designsystem.R.font.nunito_bold)),
@@ -129,7 +130,7 @@ fun IntroScreen(modifier: Modifier = Modifier) {
                         contentPadding = PaddingValues(vertical = 17.dp)
                     ) {
                         Text(
-                            text = "Sign In", style = TextStyle(
+                            text = stringResource(R.string.sign_in), style = TextStyle(
                                 fontSize = 16.sp,
                                 color = SahetyTheme.colors.primaryContainer,
                                 fontFamily = FontFamily(Font(resId = com.devyoussef.designsystem.R.font.nunito_regular))
@@ -143,7 +144,9 @@ fun IntroScreen(modifier: Modifier = Modifier) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 18.dp),
-                        onClick = {},
+                        onClick = {
+                            onNavigateToSignUp()
+                        },
                         shape = RoundedCornerShape(16.dp),
                         colors = ButtonDefaults.elevatedButtonColors(
                             containerColor = Color.Transparent
@@ -154,7 +157,7 @@ fun IntroScreen(modifier: Modifier = Modifier) {
                         contentPadding = PaddingValues(vertical = 17.dp)
                     ) {
                         Text(
-                            text = "Sign Up", style = TextStyle(
+                            text = stringResource(R.string.sign_up), style = TextStyle(
                                 fontSize = 16.sp,
                                 color = Color.White,
                                 fontFamily = FontFamily(Font(resId = com.devyoussef.designsystem.R.font.nunito_regular))
