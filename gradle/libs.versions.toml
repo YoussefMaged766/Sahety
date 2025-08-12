@@ -29,6 +29,8 @@ navigationRuntimeKtx = "2.9.1"
 serialization = "1.9.0"
 
 featureDeliveryKtx = "2.1.0"
+googleFirebaseAppdistribution = "5.1.1"
+googleGmsGoogleServices = "4.4.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -75,3 +77,5 @@ android-dynamic-feature = { id = "com.android.dynamic-feature", version.ref = "a
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+google-firebase-appdistribution = { id = "com.google.firebase.appdistribution", version.ref = "googleFirebaseAppdistribution" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
