@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.devyoussef.core.designsystem"
+    namespace = "com.devyoussef.designsystem"
     compileSdk = 36
 
     defaultConfig {

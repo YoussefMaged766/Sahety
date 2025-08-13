@@ -11,7 +11,7 @@ plugins {
 }
 
 android {
-    namespace = "com.devyoussef.features.Authentication.signup"
+    namespace = "com.devyoussef.signup"
     compileSdk = 36
 
     defaultConfig {
@@ -45,6 +45,8 @@ android {
 
 dependencies {
 
+    implementation(project(":core:designsystem"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -57,6 +59,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    debugImplementation(libs.androidx.ui.tooling)
 
     // Dagger Hilt
     implementation(libs.dagger.hilt.android)

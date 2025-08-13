@@ -47,14 +47,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.devyoussef.designsystem.theme.SahetyTheme
-import com.devyoussef.features.onboarding.R
+import com.devyoussef.onboarding.R
 import com.devyoussef.onboarding.model.OnBoardingModel
-
 
 
 @Composable
@@ -110,7 +110,7 @@ fun OnBoardingScreen(
                 currentPage = currentPageIndex,
                 items = onBoardingItems,
                 onNextClick = {
-                    viewModel.handleNextClick(onBoardingItems.size , navigateToIntro)
+                    viewModel.handleNextClick(onBoardingItems.size, navigateToIntro)
                 },
                 onPreviousClick = {
                     viewModel.previousPage()
@@ -161,12 +161,12 @@ fun OnboardPage(
                         ) + fadeOut()
             }) { title ->
                 Text(
-                    text =stringResource(title) ,
+                    text = stringResource(title),
                     modifier = Modifier.fillMaxWidth(),
                     color = SahetyTheme.colors.primaryText,
                     fontSize = 24.sp,
                     textAlign = TextAlign.Center,
-                    fontFamily = FontFamily(Font(resId = com.devyoussef.core.designsystem.R.font.nunito_bold))
+                    fontFamily = FontFamily(Font(resId = com.devyoussef.designsystem.R.font.nunito_bold))
                 )
             }
 
@@ -186,12 +186,12 @@ fun OnboardPage(
                         ) + fadeOut()
             }) { description ->
                 Text(
-                    text =stringResource(description) ,
+                    text = stringResource(description),
                     modifier = Modifier.fillMaxWidth(),
                     color = SahetyTheme.colors.secondaryText,
                     fontSize = 18.sp,
                     textAlign = TextAlign.Center,
-                    fontFamily = FontFamily(Font(resId = com.devyoussef.core.designsystem.R.font.nunito_regular))
+                    fontFamily = FontFamily(Font(resId = com.devyoussef.designsystem.R.font.nunito_regular))
                 )
             }
 
@@ -298,5 +298,14 @@ fun Indicator(isSelected: Boolean) {
             .background(
                 if (isSelected) SahetyTheme.colors.primaryContainer else Color(0xFF6E6E6E)
             )
+    )
+}
+
+@Preview(showSystemUi = true)
+@Composable
+private fun PreviewOnBoarding() {
+    OnBoardingScreen(
+        navigateToOnBoarding = {},
+        navigateToIntro = {}
     )
 }
