@@ -52,8 +52,8 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.devyoussef.designsystem.AppFonts
 import com.devyoussef.designsystem.theme.SahetyTheme
-import com.devyoussef.onboarding.R
 import com.devyoussef.onboarding.model.OnBoardingModel
 
 
@@ -166,7 +166,7 @@ fun OnboardPage(
                     color = SahetyTheme.colors.primaryText,
                     fontSize = 24.sp,
                     textAlign = TextAlign.Center,
-                    fontFamily = FontFamily(Font(resId = com.devyoussef.designsystem.R.font.nunito_bold))
+                    fontFamily = AppFonts.NunitoBold
                 )
             }
 
@@ -191,7 +191,7 @@ fun OnboardPage(
                     color = SahetyTheme.colors.secondaryText,
                     fontSize = 18.sp,
                     textAlign = TextAlign.Center,
-                    fontFamily = FontFamily(Font(resId = com.devyoussef.designsystem.R.font.nunito_regular))
+                    fontFamily = AppFonts.NunitoRegular
                 )
             }
 

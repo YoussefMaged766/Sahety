@@ -11,7 +11,7 @@ plugins {
 }
 
 android {
-    namespace = "com.devyoussef.features.splash"
+    namespace = "com.devyoussef.splash"
     compileSdk = 36
 
     defaultConfig {

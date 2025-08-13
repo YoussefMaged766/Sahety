@@ -34,8 +34,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.devyoussef.core.designsystem.R
-
+import com.devyoussef.designsystem.AppFonts
+import com.devyoussef.designsystem.R
 import com.devyoussef.designsystem.theme.SahetyTheme
 import kotlinx.coroutines.delay
 
@@ -49,7 +49,7 @@ fun SplashScreen(
     val textProgress = remember { Animatable(0f) }
     val textAlpha = remember { Animatable(0f) }
 
-    val appTitle = stringResource(com.devyoussef.features.splash.R.string.sehaty)
+    val appTitle = stringResource(com.devyoussef.splash.R.string.sehaty)
 
     // Build animated text
     val animatedText = buildAnnotatedString {
@@ -131,7 +131,7 @@ fun SplashScreen(
                     text = animatedText, modifier = Modifier, style = TextStyle(
                         fontSize = 32.sp,
                         fontWeight = FontWeight.Bold,
-                        fontFamily = FontFamily(Font(R.font.nunito_bold))
+                        fontFamily = AppFonts.NunitoBold
                     )
                 )
             }
