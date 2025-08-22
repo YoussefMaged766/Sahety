@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="welcome">Welcome!</string>
+    <string name="welcome"> مرحبًا بك !</string>
+    <string name="patient">مريض</string>
+    <string name="doctor">طبيب</string>
+    <string name="clinic_manager">مدير العيادة</string>
+    <string name="email">البريد الإلكتروني</string>
 </resources>

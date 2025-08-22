@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="welcome">Welcome!</string>
+    <string name="patient">Patient</string>
+    <string name="doctor">Doctor</string>
+    <string name="clinic_manager">Clinic Manager</string>
+    <string name="email">Email</string>
 </resources>

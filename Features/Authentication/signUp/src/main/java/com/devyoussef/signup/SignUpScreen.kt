@@ -37,6 +37,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.devyoussef.designsystem.AppFonts
+import com.devyoussef.designsystem.SahetyTextField
 import com.devyoussef.designsystem.theme.SahetyTheme
 import com.devyoussef.signup.R
 
@@ -44,7 +46,12 @@ import com.devyoussef.signup.R
 fun SignUpScreen(
     modifier: Modifier = Modifier
 ) {
-
+    val radioOptions = listOf(
+        stringResource(R.string.patient),
+        stringResource(R.string.doctor),
+        stringResource(R.string.clinic_manager)
+    )
+    val (selectedOption, onOptionSelected) = rememberSaveable { mutableStateOf(radioOptions[0]) }
 
     Scaffold() { innerPadding ->
         Column(
@@ -55,8 +62,22 @@ fun SignUpScreen(
 
         ) {
             HeaderSection(modifier = Modifier)
-            SignUpUsers()
-            // Add other components like input fields, buttons, etc.
+            SignUpUsers(
+                radioOptions = radioOptions,
+                selectedOption = selectedOption,
+                onOptionSelected = onOptionSelected
+            )
+
+            SahetyTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp, vertical = 8.dp),
+                value = "",
+                onValueChange = {},
+                label = stringResource(R.string.email),
+
+            )
+
         }
 
     }
@@ -107,9 +128,12 @@ fun HeaderSection(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun SignUpUsers(modifier: Modifier = Modifier) {
-    val radioOptions = listOf("Patient", "Doctor", "Clinic Manager")
-    val (selectedOption, onOptionSelected) = rememberSaveable { mutableStateOf(radioOptions[0]) }
+fun SignUpUsers(
+    modifier: Modifier = Modifier,
+    radioOptions: List<String>,
+    selectedOption: String = radioOptions[0],
+    onOptionSelected: (String) -> Unit = {}
+) {
 
     Row(
         modifier = Modifier
@@ -126,7 +150,7 @@ fun SignUpUsers(modifier: Modifier = Modifier) {
                         selected = (text == selectedOption),
                         onClick = { onOptionSelected(text) },
                         role = Role.RadioButton,
-                        interactionSource =  remember { MutableInteractionSource() },
+                        interactionSource = remember { MutableInteractionSource() },
                         indication = ripple(color = SahetyTheme.colors.primaryContainer)
                     ),
                 verticalAlignment = Alignment.CenterVertically,
@@ -145,7 +169,7 @@ fun SignUpUsers(modifier: Modifier = Modifier) {
                     style = TextStyle(
                         color = SahetyTheme.colors.primaryText,
                         fontSize = 16.sp,
-                        fontFamily = FontFamily(Font(com.devyoussef.designsystem.R.font.nunito_regular))
+                        fontFamily = AppFonts.NunitoRegular
                     ),
                     modifier = Modifier.padding(start = 8.dp)
                 )
@@ -153,7 +177,6 @@ fun SignUpUsers(modifier: Modifier = Modifier) {
         }
     }
 }
-
 
 
 @Preview(
