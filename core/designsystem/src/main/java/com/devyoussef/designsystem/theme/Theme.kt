@@ -38,7 +38,7 @@ object SahetyTheme {
         @Composable
         get() = LocalCustomColors.current
 
-    val shapes: Shapes
+    val shapes: CustomShapes
         @Composable
         get() = localCustomShapes.current
 }

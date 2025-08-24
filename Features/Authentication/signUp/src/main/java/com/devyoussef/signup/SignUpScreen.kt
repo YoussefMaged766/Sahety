@@ -71,7 +71,8 @@ fun SignUpScreen(
             SahetyTextField(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 24.dp, vertical = 8.dp),
+                    .padding(horizontal = 18.dp)
+                    ,
                 value = "",
                 onValueChange = {},
                 label = stringResource(R.string.email),
