@@ -5,4 +5,5 @@
     <string name="doctor">طبيب</string>
     <string name="clinic_manager">مدير العيادة</string>
     <string name="email">البريد الإلكتروني</string>
+    <string name="full_name"> الاسم الكامل</string>
 </resources>

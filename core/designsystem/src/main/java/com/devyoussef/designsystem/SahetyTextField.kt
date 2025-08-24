@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -21,13 +22,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -41,8 +45,11 @@ fun SahetyTextField(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
+    leadingIcon: @Composable (() -> Unit)? = null,
     label: String,
-    isPassword: Boolean = false
+    isPassword: Boolean = false,
+    isError: Boolean = false,
+    errorMessage: String = ""
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
 
@@ -63,7 +70,7 @@ fun SahetyTextField(
                 .clip(SahetyTheme.shapes.medium)
                 .border(
                     width = 1.5.dp,
-                    color = SahetyTheme.colors.secondaryText,
+                    color = if (isError) SahetyTheme.colors.error else SahetyTheme.colors.secondaryText,
                     shape = SahetyTheme.shapes.medium
                 )
                 .height(IntrinsicSize.Min)
@@ -73,10 +80,20 @@ fun SahetyTextField(
         ) {
 
             TextField(
-                modifier = Modifier.background(color = SahetyTheme.colors.bgColor),
+                modifier = Modifier
+                    .background(color = SahetyTheme.colors.bgColor)
+                    .fillMaxWidth(),
                 value = value,
                 onValueChange = onValueChange,
-                placeholder = { Text(label) },
+                placeholder = {
+                    Text(
+                        label, style = TextStyle(
+                            color = SahetyTheme.colors.secondaryText,
+                            fontFamily = AppFonts.NunitoRegular,
+                            fontSize = 16.sp
+                        )
+                    )
+                },
                 visualTransformation = if (isPassword && !passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color.Transparent,
@@ -84,9 +101,7 @@ fun SahetyTextField(
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent
                 ),
-                leadingIcon = {
-                    Icon(imageVector = Icons.Default.Person, contentDescription = null)
-                },
+                leadingIcon = leadingIcon,
                 trailingIcon = {
                     if (isPassword) {
                         IconButton(onClick = { passwordVisible = !passwordVisible }) {
@@ -95,12 +110,34 @@ fun SahetyTextField(
                                 contentDescription = null
                             )
                         }
+                    } else {
+                        Icon(imageVector = Icons.Default.Clear, contentDescription = null)
                     }
                 }
             )
         }
+        if (isError && errorMessage.isNotEmpty()) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(top = 5.dp)
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_error),
+                    contentDescription = null,
+                    tint = SahetyTheme.colors.error
+                )
+                Text(
+                    text = errorMessage,
+                    modifier = Modifier.padding(top = 4.dp),
+                    style = TextStyle(
+                        color = SahetyTheme.colors.error,
+                        fontFamily = AppFonts.NunitoRegular,
+                        fontSize = 14.sp
+                    )
+                )
+            }
 
-
+        }
     }
 
 

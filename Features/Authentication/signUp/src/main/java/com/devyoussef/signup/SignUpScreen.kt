@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.Icon
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonColors
 import androidx.compose.material3.RadioButtonDefaults
@@ -71,12 +72,23 @@ fun SignUpScreen(
             SahetyTextField(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 18.dp)
-                    ,
+                    .padding(horizontal = 18.dp),
                 value = "",
                 onValueChange = {},
-                label = stringResource(R.string.email),
-
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_full_name),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(24.dp)
+                            ,
+                        tint = SahetyTheme.colors.secondaryText
+                    )
+                },
+                label = stringResource(R.string.full_name),
+                isPassword = false,
+                isError = true,
+                errorMessage = "This field is required"
             )
 
         }
