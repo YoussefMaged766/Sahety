@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devyoussef.designsystem.AppFonts
 import com.devyoussef.designsystem.theme.SahetyTheme
+import com.devyoussef.onboarding.R
 
 @Composable
 fun IntroScreen(modifier: Modifier = Modifier , onNavigateToSignUp: () -> Unit = {}) {

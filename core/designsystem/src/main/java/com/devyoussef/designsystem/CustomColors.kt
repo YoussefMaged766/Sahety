@@ -24,3 +24,4 @@ data class CustomColors(
     val secondaryPressed : Color,
     val whiteIcon : Color,
 )
+
