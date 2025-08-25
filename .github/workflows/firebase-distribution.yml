@@ -4,7 +4,7 @@ name: Firebase App Distribution (Debug)
 on:
   push:
     branches:
-      - dev
+      - staging
 
 jobs:
   build-and-distribute:
