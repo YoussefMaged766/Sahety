@@ -45,123 +45,123 @@ import com.devyoussef.signup.R
 fun SignUpScreen(
     modifier: Modifier = Modifier
 ) {
-    val radioOptions = listOf(
-        stringResource(R.string.patient),
-        stringResource(R.string.doctor),
-        stringResource(R.string.clinic_manager)
-    )
-    val (selectedOption, onOptionSelected) = rememberSaveable { mutableStateOf(radioOptions[0]) }
-
-    var fullName by rememberSaveable { mutableStateOf("") }
-    var email by rememberSaveable { mutableStateOf("") }
-
-    Scaffold() { innerPadding ->
-        Column(
-            modifier = modifier
-                .background(SahetyTheme.colors.bgColor)
-                .padding(innerPadding)
-                .fillMaxSize()
-
-        ) {
-            HeaderSection(modifier = Modifier)
-            SignUpUsers(
-                radioOptions = radioOptions,
-                selectedOption = selectedOption,
-                onOptionSelected = onOptionSelected
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-
-            SahetyTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 18.dp),
-                value = fullName,
-                onValueChange = { fullName = it },
-                leadingIcon = {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_full_name),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(24.dp),
-                        tint = SahetyTheme.colors.secondaryText
-                    )
-                },
-                label = stringResource(R.string.full_name),
-                isPassword = false,
-                isError = false,
-                errorMessage = "This field is required"
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            SahetyTextField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 18.dp),
-                value = email,
-                onValueChange = { email = it },
-                leadingIcon = {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_email),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(24.dp),
-                        tint = SahetyTheme.colors.secondaryText
-                    )
-                },
-                label = stringResource(R.string.email),
-                isPassword = false,
-                isError = false,
-                errorMessage = "This field is required"
-            )
-
-        }
-
-    }
+//    val radioOptions = listOf(
+//        stringResource(R.string.patient),
+//        stringResource(R.string.doctor),
+//        stringResource(R.string.clinic_manager)
+//    )
+//    val (selectedOption, onOptionSelected) = rememberSaveable { mutableStateOf(radioOptions[0]) }
+//
+//    var fullName by rememberSaveable { mutableStateOf("") }
+//    var email by rememberSaveable { mutableStateOf("") }
+//
+//    Scaffold() { innerPadding ->
+//        Column(
+//            modifier = modifier
+//                .background(SahetyTheme.colors.bgColor)
+//                .padding(innerPadding)
+//                .fillMaxSize()
+//
+//        ) {
+//            HeaderSection(modifier = Modifier)
+//            SignUpUsers(
+//                radioOptions = radioOptions,
+//                selectedOption = selectedOption,
+//                onOptionSelected = onOptionSelected
+//            )
+//            Spacer(modifier = Modifier.height(8.dp))
+//
+//            SahetyTextField(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(horizontal = 18.dp),
+//                value = fullName,
+//                onValueChange = { fullName = it },
+//                leadingIcon = {
+//                    Icon(
+//                        painter = painterResource(R.drawable.ic_full_name),
+//                        contentDescription = null,
+//                        modifier = Modifier
+//                            .size(24.dp),
+//                        tint = SahetyTheme.colors.secondaryText
+//                    )
+//                },
+//                label = stringResource(R.string.full_name),
+//                isPassword = false,
+//                isError = false,
+//                errorMessage = "This field is required"
+//            )
+//
+//            Spacer(modifier = Modifier.height(16.dp))
+//
+//            SahetyTextField(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(horizontal = 18.dp),
+//                value = email,
+//                onValueChange = { email = it },
+//                leadingIcon = {
+//                    Icon(
+//                        painter = painterResource(R.drawable.ic_email),
+//                        contentDescription = null,
+//                        modifier = Modifier
+//                            .size(24.dp),
+//                        tint = SahetyTheme.colors.secondaryText
+//                    )
+//                },
+//                label = stringResource(R.string.email),
+//                isPassword = false,
+//                isError = false,
+//                errorMessage = "This field is required"
+//            )
+//
+//        }
+//
+//    }
 
 
 }
 
 @Composable
 fun HeaderSection(modifier: Modifier = Modifier) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    ) {
-        Column(
-            modifier = modifier
-                .weight(1f)
-
-        ) {
-            Text(
-                text = stringResource(R.string.welcome),
-                style = TextStyle(
-                    color = SahetyTheme.colors.primaryText,
-                    fontSize = 24.sp,
-                    fontFamily = AppFonts.NunitoBold
-                )
-            )
-
-            Text(
-                text = "Join us and start your journey today.",
-                style = TextStyle(
-                    color = SahetyTheme.colors.primaryText,
-                    fontSize = 18.sp,
-                    fontFamily = AppFonts.NunitoRegular
-                )
-            )
-        }
-
-        Image(
-            painter = painterResource(com.devyoussef.designsystem.R.drawable.ic_logo),
-            contentDescription = null,
-            modifier = Modifier
-                .size(48.dp)
-                .align(Alignment.CenterVertically)
-
-        )
-    }
+//    Row(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(16.dp)
+//    ) {
+//        Column(
+//            modifier = modifier
+//                .weight(1f)
+//
+//        ) {
+//            Text(
+//                text = stringResource(R.string.welcome),
+//                style = TextStyle(
+//                    color = SahetyTheme.colors.primaryText,
+//                    fontSize = 24.sp,
+//                    fontFamily = AppFonts.NunitoBold
+//                )
+//            )
+//
+//            Text(
+//                text = "Join us and start your journey today.",
+//                style = TextStyle(
+//                    color = SahetyTheme.colors.primaryText,
+//                    fontSize = 18.sp,
+//                    fontFamily = AppFonts.NunitoRegular
+//                )
+//            )
+//        }
+//
+//        Image(
+//            painter = painterResource(com.devyoussef.designsystem.R.drawable.ic_logo),
+//            contentDescription = null,
+//            modifier = Modifier
+//                .size(48.dp)
+//                .align(Alignment.CenterVertically)
+//
+//        )
+//    }
 }
 
 @Composable
@@ -171,48 +171,48 @@ fun SignUpUsers(
     selectedOption: String = radioOptions[0],
     onOptionSelected: (String) -> Unit = {}
 ) {
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .selectableGroup()
-            .padding(start = 18.dp, end = 12.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        radioOptions.forEach { text ->
-            Row(
-                modifier = Modifier
-                    .height(56.dp)
-                    .selectable(
-                        selected = (text == selectedOption),
-                        onClick = { onOptionSelected(text) },
-                        role = Role.RadioButton,
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = ripple(color = SahetyTheme.colors.secondaryPressed)
-                    ),
-                verticalAlignment = Alignment.CenterVertically,
-
-                ) {
-                RadioButton(
-                    selected = (text == selectedOption),
-                    onClick = null,// null recommended for accessibility with screen readers,
-                    colors = RadioButtonDefaults.colors(
-                        selectedColor = SahetyTheme.colors.primaryContainer,
-                        unselectedColor = SahetyTheme.colors.secondaryText,
-                    )
-                )
-                Text(
-                    text = text,
-                    style = TextStyle(
-                        color = SahetyTheme.colors.primaryText,
-                        fontSize = 16.sp,
-                        fontFamily = AppFonts.NunitoRegular
-                    ),
-                    modifier = Modifier.padding(start = 8.dp)
-                )
-            }
-        }
-    }
+//
+//    Row(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .selectableGroup()
+//            .padding(start = 18.dp, end = 12.dp),
+//        horizontalArrangement = Arrangement.SpaceBetween
+//    ) {
+//        radioOptions.forEach { text ->
+//            Row(
+//                modifier = Modifier
+//                    .height(56.dp)
+//                    .selectable(
+//                        selected = (text == selectedOption),
+//                        onClick = { onOptionSelected(text) },
+//                        role = Role.RadioButton,
+//                        interactionSource = remember { MutableInteractionSource() },
+//                        indication = ripple(color = SahetyTheme.colors.secondaryPressed)
+//                    ),
+//                verticalAlignment = Alignment.CenterVertically,
+//
+//                ) {
+//                RadioButton(
+//                    selected = (text == selectedOption),
+//                    onClick = null,// null recommended for accessibility with screen readers,
+//                    colors = RadioButtonDefaults.colors(
+//                        selectedColor = SahetyTheme.colors.primaryContainer,
+//                        unselectedColor = SahetyTheme.colors.secondaryText,
+//                    )
+//                )
+//                Text(
+//                    text = text,
+//                    style = TextStyle(
+//                        color = SahetyTheme.colors.primaryText,
+//                        fontSize = 16.sp,
+//                        fontFamily = AppFonts.NunitoRegular
+//                    ),
+//                    modifier = Modifier.padding(start = 8.dp)
+//                )
+//            }
+//        }
+//    }
 }
 
 
