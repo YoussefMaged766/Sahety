@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import com.devyoussef.designsystem.AppFonts
 import com.devyoussef.designsystem.SahetyTextField
 import com.devyoussef.designsystem.theme.SahetyTheme
+import com.devyoussef.signup.R
 
 @Composable
 fun SignUpScreen(
