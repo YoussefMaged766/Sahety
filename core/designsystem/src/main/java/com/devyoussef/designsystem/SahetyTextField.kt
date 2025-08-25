@@ -119,13 +119,18 @@ fun SahetyTextField(
                         IconButton(onClick = { passwordVisible = !passwordVisible }) {
                             Icon(
                                 imageVector = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                                contentDescription = null
+                                contentDescription = null,
+                                tint = SahetyTheme.colors.secondaryText
                             )
                         }
                     } else {
                         if (value.isEmpty()) return@TextField
                         IconButton(onClick = { onValueChange("") }) {
-                            Icon(imageVector = Icons.Filled.Clear, contentDescription = null)
+                            Icon(
+                                imageVector = Icons.Filled.Clear,
+                                contentDescription = null,
+                                tint = SahetyTheme.colors.secondaryText
+                            )
                         }
                     }
                 }
