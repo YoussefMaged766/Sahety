@@ -70,6 +70,7 @@ fun SignUpScreen(
                 selectedOption = selectedOption,
                 onOptionSelected = onOptionSelected
             )
+            Spacer(modifier = Modifier.height(8.dp))
 
             SahetyTextField(
                 modifier = Modifier
@@ -176,7 +177,7 @@ fun SignUpUsers(
         modifier = Modifier
             .fillMaxWidth()
             .selectableGroup()
-            .padding(start = 24.dp, end = 12.dp),
+            .padding(start = 18.dp, end = 12.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         radioOptions.forEach { text ->
@@ -188,7 +189,7 @@ fun SignUpUsers(
                         onClick = { onOptionSelected(text) },
                         role = Role.RadioButton,
                         interactionSource = remember { MutableInteractionSource() },
-                        indication = ripple(color = SahetyTheme.colors.primaryContainer)
+                        indication = ripple(color = SahetyTheme.colors.secondaryPressed)
                     ),
                 verticalAlignment = Alignment.CenterVertically,
 
