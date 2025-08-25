@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Person
@@ -33,6 +34,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -70,7 +72,11 @@ fun SahetyTextField(
                 .clip(SahetyTheme.shapes.medium)
                 .border(
                     width = 1.5.dp,
-                    color = if (isError) SahetyTheme.colors.error else SahetyTheme.colors.secondaryText,
+                    color = when {
+                        isError -> SahetyTheme.colors.error
+                        value.isEmpty() -> SahetyTheme.colors.secondaryText
+                        else -> SahetyTheme.colors.primaryContainer
+                    },
                     shape = SahetyTheme.shapes.medium
                 )
                 .height(IntrinsicSize.Min)
@@ -95,11 +101,17 @@ fun SahetyTextField(
                     )
                 },
                 visualTransformation = if (isPassword && !passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = if (isPassword) KeyboardType.Password else KeyboardType.Text
+                ),
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedTextColor = SahetyTheme.colors.secondaryText,
+                    unfocusedTextColor = SahetyTheme.colors.secondaryText,
+                    cursorColor = SahetyTheme.colors.primaryText
                 ),
                 leadingIcon = leadingIcon,
                 trailingIcon = {
@@ -111,7 +123,10 @@ fun SahetyTextField(
                             )
                         }
                     } else {
-                        Icon(imageVector = Icons.Default.Clear, contentDescription = null)
+                        if (value.isEmpty()) return@TextField
+                        IconButton(onClick = { onValueChange("") }) {
+                            Icon(imageVector = Icons.Filled.Clear, contentDescription = null)
+                        }
                     }
                 }
             )
@@ -139,8 +154,6 @@ fun SahetyTextField(
 
         }
     }
-
-
 }
 
 
