@@ -47,6 +47,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.devyoussef.designsystem.AppFonts
 import com.devyoussef.designsystem.theme.SahetyTheme
 import com.devyoussef.onboarding.R
 
@@ -91,7 +92,7 @@ fun IntroScreen(modifier: Modifier = Modifier , onNavigateToSignUp: () -> Unit =
                     text = stringResource(R.string.your_health_journey_starts_here),
                     fontSize = 32.sp,
                     color = Color.White,
-                    fontFamily = FontFamily(Font(resId = com.devyoussef.designsystem.R.font.nunito_bold)),
+                    fontFamily = AppFonts.NunitoBold,
                 )
                 Image(
                     painter = painterResource(R.drawable.img_intro),
@@ -137,7 +138,7 @@ fun IntroScreen(modifier: Modifier = Modifier , onNavigateToSignUp: () -> Unit =
                             text = stringResource(R.string.sign_in), style = TextStyle(
                                 fontSize = 16.sp,
                                 color = SahetyTheme.colors.primaryContainer,
-                                fontFamily = FontFamily(Font(resId = com.devyoussef.designsystem.R.font.nunito_regular))
+                                fontFamily = AppFonts.NunitoRegular
                             )
                         )
                     }
@@ -164,7 +165,7 @@ fun IntroScreen(modifier: Modifier = Modifier , onNavigateToSignUp: () -> Unit =
                             text = stringResource(R.string.sign_up), style = TextStyle(
                                 fontSize = 16.sp,
                                 color = Color.White,
-                                fontFamily = FontFamily(Font(resId = com.devyoussef.designsystem.R.font.nunito_regular))
+                                fontFamily = AppFonts.NunitoRegular
                             )
                         )
                     }
