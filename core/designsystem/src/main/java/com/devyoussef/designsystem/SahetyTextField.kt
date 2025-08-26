@@ -133,6 +133,7 @@ fun SahetyTextField(
                             )
                         }
                     } else {
+                        if (value.isEmpty()) return@TextField
                         IconButton(onClick = { onValueChange("") }) {
                             Icon(imageVector = Icons.Filled.Clear, contentDescription = null)
                         }
