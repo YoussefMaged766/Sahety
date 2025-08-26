@@ -144,7 +144,7 @@ fun HeaderSection(modifier: Modifier = Modifier) {
             )
 
             Text(
-                text = "Join us and start your journey today.",
+                text = stringResource(R.string.join_us_and_start_your_journey_today),
                 style = TextStyle(
                     color = SahetyTheme.colors.primaryText,
                     fontSize = 18.sp,
