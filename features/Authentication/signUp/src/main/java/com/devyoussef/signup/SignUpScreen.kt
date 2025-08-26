@@ -46,9 +46,9 @@ fun SignUpScreen(
     modifier: Modifier = Modifier
 ) {
     val radioOptions = listOf(
-        "stringResource(R.string.patient)",
-        "stringResource(R.string.doctor)",
-        "stringResource(R.string.clinic_manager)"
+        stringResource(R.string.patient),
+        stringResource(R.string.doctor),
+        stringResource(R.string.clinic_manager)
     )
     val (selectedOption, onOptionSelected) = rememberSaveable { mutableStateOf(radioOptions[0]) }
 
@@ -79,14 +79,14 @@ fun SignUpScreen(
                 onValueChange = { fullName = it },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(com.devyoussef.designsystem.R.drawable.ic_error),
+                        painter = painterResource(R.drawable.ic_full_name),
                         contentDescription = null,
                         modifier = Modifier
                             .size(24.dp),
                         tint = SahetyTheme.colors.secondaryText
                     )
                 },
-                label = "stringResource(R.string.full_name)",
+                label = stringResource(R.string.full_name),
                 isPassword = false,
                 isError = false,
                 errorMessage = "This field is required"
@@ -102,14 +102,14 @@ fun SignUpScreen(
                 onValueChange = { email = it },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(com.devyoussef.designsystem.R.drawable.ic_logo),
+                        painter = painterResource(R.drawable.ic_email),
                         contentDescription = null,
                         modifier = Modifier
                             .size(24.dp),
                         tint = SahetyTheme.colors.secondaryText
                     )
                 },
-                label = "stringResource(R.string.email)",
+                label = stringResource(R.string.email),
                 isPassword = false,
                 isError = false,
                 errorMessage = "This field is required"
@@ -135,7 +135,7 @@ fun HeaderSection(modifier: Modifier = Modifier) {
 
         ) {
             Text(
-                text = "stringResource(R.string.welcome)",
+                text = stringResource(R.string.welcome),
                 style = TextStyle(
                     color = SahetyTheme.colors.primaryText,
                     fontSize = 24.sp,
@@ -144,7 +144,7 @@ fun HeaderSection(modifier: Modifier = Modifier) {
             )
 
             Text(
-                text = "stringResource(R.string.join_us_and_start_your_journey_today)",
+                text = stringResource(R.string.join_us_and_start_your_journey_today),
                 style = TextStyle(
                     color = SahetyTheme.colors.primaryText,
                     fontSize = 18.sp,

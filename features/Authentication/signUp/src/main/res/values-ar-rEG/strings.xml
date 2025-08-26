@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome"> مرحبًا بك !</string>
+    <string name="patient">مريض</string>
+    <string name="doctor">طبيب</string>
+    <string name="clinic_manager">مدير العيادة</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="full_name"> الاسم الكامل</string>
+    <string name="join_us_and_start_your_journey_today"> انضم إلينا وابدأ رحلتك اليوم.</string>
+</resources>

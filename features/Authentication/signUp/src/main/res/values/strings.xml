@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome">Welcome!</string>
+    <string name="patient">Patient</string>
+    <string name="doctor">Doctor</string>
+    <string name="clinic_manager">Clinic Manager</string>
+    <string name="email">Email</string>
+    <string name="full_name">Full Name</string>
+    <string name="join_us_and_start_your_journey_today">Join us and start your journey today.</string>
+</resources>
