@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -34,6 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -49,6 +51,9 @@ fun SahetyTextField(
     onValueChange: (String) -> Unit,
     leadingIcon: @Composable (() -> Unit)? = null,
     label: String,
+    imeAction: ImeAction,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    singleLine: Boolean = true,
     isPassword: Boolean = false,
     isError: Boolean = false,
     errorMessage: String = ""
@@ -100,9 +105,10 @@ fun SahetyTextField(
                         )
                     )
                 },
-                visualTransformation = if (isPassword && !passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
+                visualTransformation = if (isPassword && !passwordVisible)  PasswordVisualTransformation() else VisualTransformation.None,
                 keyboardOptions = KeyboardOptions(
-                    keyboardType = if (isPassword) KeyboardType.Password else KeyboardType.Text
+                    keyboardType = if (isPassword) KeyboardType.Password else KeyboardType.Text,
+                    imeAction = imeAction
                 ),
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color.Transparent,
@@ -113,6 +119,7 @@ fun SahetyTextField(
                     unfocusedTextColor = SahetyTheme.colors.secondaryText,
                     cursorColor = SahetyTheme.colors.primaryText
                 ),
+                singleLine = singleLine,
                 leadingIcon = leadingIcon,
                 trailingIcon = {
                     if (isPassword) {
@@ -170,6 +177,7 @@ private fun SahetyTextFieldPreview() {
         onValueChange = {},
         label = "Email",
         isPassword = true,
-        modifier = Modifier
+        modifier = Modifier,
+        imeAction = ImeAction.Done
     )
 }
