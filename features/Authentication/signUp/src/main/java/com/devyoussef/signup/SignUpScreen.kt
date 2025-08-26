@@ -79,7 +79,7 @@ fun SignUpScreen(
                 onValueChange = { fullName = it },
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(com.devyoussef.designsystem.R.drawable.ic_error),
+                        painter = painterResource(R.drawable.ic_full_name),
                         contentDescription = null,
                         modifier = Modifier
                             .size(24.dp),
