@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import com.devyoussef.core_navigation.Screens
 import com.devyoussef.onboarding.IntroScreen
 import com.devyoussef.onboarding.OnBoardingScreen
-import com.devyoussef.signup.SignUpScreen
+import com.devyoussef.signup.ui.SignUpScreen
 import com.devyoussef.splash.SplashScreen
 
 

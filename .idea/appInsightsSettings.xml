@@ -23,9 +23,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.devyoussef.sahety" />
-                  <option name="mobileSdkAppId" value="1:672170685735:android:4bc811d92674eeee30e502" />
-                  <option name="projectId" value="sahety-d5389" />
-                  <option name="projectNumber" value="672170685735" />
+                  <option name="mobileSdkAppId" value="1:244407069485:android:52b10cf2f4330ec93b81a4" />
+                  <option name="projectId" value="sahety-a363b" />
+                  <option name="projectNumber" value="244407069485" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

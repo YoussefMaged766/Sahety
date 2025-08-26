@@ -43,6 +43,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.devyoussef.designsystem.theme.SahetyTheme
+import androidx.compose.ui.focus.onFocusChanged
 
 @Composable
 fun SahetyTextField(
@@ -51,12 +52,13 @@ fun SahetyTextField(
     onValueChange: (String) -> Unit,
     leadingIcon: @Composable (() -> Unit)? = null,
     label: String,
-    imeAction: ImeAction,
-    keyboardActions: KeyboardActions = KeyboardActions.Default,
-    singleLine: Boolean = true,
     isPassword: Boolean = false,
     isError: Boolean = false,
-    errorMessage: String = ""
+    errorMessage: String = "",
+    imeAction: ImeAction = ImeAction.Default,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    onFocusChanged: ((Boolean) -> Unit)? = null
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
 
@@ -79,8 +81,8 @@ fun SahetyTextField(
                     width = 1.5.dp,
                     color = when {
                         isError -> SahetyTheme.colors.error
-                        value.isEmpty() -> SahetyTheme.colors.secondaryText
-                        else -> SahetyTheme.colors.primaryContainer
+                        value.isNotEmpty() -> SahetyTheme.colors.success
+                        else -> SahetyTheme.colors.secondaryText
                     },
                     shape = SahetyTheme.shapes.medium
                 )
@@ -93,7 +95,8 @@ fun SahetyTextField(
             TextField(
                 modifier = Modifier
                     .background(color = SahetyTheme.colors.bgColor)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .onFocusChanged { state -> onFocusChanged?.invoke(state.isFocused) },
                 value = value,
                 onValueChange = onValueChange,
                 placeholder = {
@@ -105,11 +108,12 @@ fun SahetyTextField(
                         )
                     )
                 },
-                visualTransformation = if (isPassword && !passwordVisible)  PasswordVisualTransformation() else VisualTransformation.None,
+                visualTransformation = if (isPassword && !passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
                 keyboardOptions = KeyboardOptions(
-                    keyboardType = if (isPassword) KeyboardType.Password else KeyboardType.Text,
+                    keyboardType = if (isPassword) KeyboardType.Password else keyboardType,
                     imeAction = imeAction
                 ),
+                keyboardActions = keyboardActions,
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
@@ -119,25 +123,18 @@ fun SahetyTextField(
                     unfocusedTextColor = SahetyTheme.colors.secondaryText,
                     cursorColor = SahetyTheme.colors.primaryText
                 ),
-                singleLine = singleLine,
                 leadingIcon = leadingIcon,
                 trailingIcon = {
                     if (isPassword) {
                         IconButton(onClick = { passwordVisible = !passwordVisible }) {
                             Icon(
                                 imageVector = if (passwordVisible) Icons.Default.Visibility else Icons.Default.VisibilityOff,
-                                contentDescription = null,
-                                tint = SahetyTheme.colors.secondaryText
+                                contentDescription = null
                             )
                         }
                     } else {
-                        if (value.isEmpty()) return@TextField
                         IconButton(onClick = { onValueChange("") }) {
-                            Icon(
-                                imageVector = Icons.Filled.Clear,
-                                contentDescription = null,
-                                tint = SahetyTheme.colors.secondaryText
-                            )
+                            Icon(imageVector = Icons.Filled.Clear, contentDescription = null)
                         }
                     }
                 }
@@ -155,7 +152,7 @@ fun SahetyTextField(
                 )
                 Text(
                     text = errorMessage,
-                    modifier = Modifier.padding(top = 4.dp),
+                    modifier = Modifier.padding(top = 4.dp , start = 4.dp),
                     style = TextStyle(
                         color = SahetyTheme.colors.error,
                         fontFamily = AppFonts.NunitoRegular,
@@ -177,7 +174,6 @@ private fun SahetyTextFieldPreview() {
         onValueChange = {},
         label = "Email",
         isPassword = true,
-        modifier = Modifier,
-        imeAction = ImeAction.Done
+        modifier = Modifier
     )
 }
