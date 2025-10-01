@@ -2,88 +2,119 @@ package com.devyoussef.signup.ui
 
 import androidx.lifecycle.ViewModel
 import com.devyoussef.signup.domain.SignUpUseCase
-import com.devyoussef.signup.domain.ValidationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
+/**
+ * ViewModel for SignUp screen
+ * Applies Single Responsibility Principle - only manages UI state
+ * Reduced boilerplate by using a single state object
+ */
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val signUpUseCase: SignUpUseCase
 ) : ViewModel() {
 
-    // Input fields
-    private val _fullName = MutableStateFlow("")
-    val fullName: StateFlow<String> = _fullName
+    // Single source of truth for UI state
+    private val _uiState = MutableStateFlow(SignUpUiState())
+    val uiState: StateFlow<SignUpUiState> = _uiState.asStateFlow()
 
-    private val _email = MutableStateFlow("")
-    val email: StateFlow<String> = _email
-
-    private val _password = MutableStateFlow("")
-    val password: StateFlow<String> = _password
-
-    private val _rePassword = MutableStateFlow("")
-    val rePassword: StateFlow<String> = _rePassword
-
-    private val _phone = MutableStateFlow("")
-    val phone: StateFlow<String> = _phone
-
-    // Validation errors
-    private val _fullNameValidation = MutableStateFlow<ValidationResult>(ValidationResult.Default)
-    val fullNameValidation: StateFlow<ValidationResult> = _fullNameValidation
-
-    private val _emailValidation = MutableStateFlow<ValidationResult>(ValidationResult.Default)
-    val emailValidation: StateFlow<ValidationResult> = _emailValidation
-
-    private val _passwordValidation = MutableStateFlow<ValidationResult>(ValidationResult.Default)
-    val passwordValidation: StateFlow<ValidationResult> = _passwordValidation
-
-    private val _rePasswordValidation =
-        MutableStateFlow<ValidationResult>(ValidationResult.Default)
-    val rePasswordValidation: StateFlow<ValidationResult> = _rePasswordValidation
-
-    private val _phoneValidation = MutableStateFlow<ValidationResult>(ValidationResult.Default)
-    val phoneValidation: StateFlow<ValidationResult> = _phoneValidation
-
-    // Field change handlers
+    /**
+     * Handles full name field changes
+     * Updates state immutably using copy()
+     */
     fun onFullNameChanged(value: String) {
-        _fullName.value = value
-        _fullNameValidation.value = signUpUseCase.validateFullName(value)
+        _uiState.update { state ->
+            state.copy(
+                fullName = FormField(
+                    value = value,
+                    validation = signUpUseCase.validateFullName(value)
+                )
+            )
+        }
     }
 
+    /**
+     * Handles email field changes
+     * Updates state immutably using copy()
+     */
     fun onEmailChanged(value: String) {
-        _email.value = value
-        _emailValidation.value = signUpUseCase.validateEmail(value)
+        _uiState.update { state ->
+            state.copy(
+                email = FormField(
+                    value = value,
+                    validation = signUpUseCase.validateEmail(value)
+                )
+            )
+        }
     }
 
+    /**
+     * Handles password field changes
+     * Also re-validates re-password field for consistency
+     */
     fun onPasswordChanged(value: String) {
-        _password.value = value
-        _passwordValidation.value = signUpUseCase.validatePassword(value)
-        // Also update rePassword error (in case password changed)
-        _rePasswordValidation.value =
-            signUpUseCase.validateRePassword(value, _rePassword.value)
+        _uiState.update { state ->
+            state.copy(
+                password = FormField(
+                    value = value,
+                    validation = signUpUseCase.validatePassword(value)
+                ),
+                // Re-validate rePassword when password changes
+                rePassword = state.rePassword.copy(
+                    validation = signUpUseCase.validateRePassword(value, state.rePassword.value)
+                )
+            )
+        }
     }
 
+    /**
+     * Handles re-password field changes
+     * Validates against current password
+     */
     fun onRePasswordChanged(value: String) {
-        _rePassword.value = value
-        _rePasswordValidation.value = signUpUseCase.validateRePassword(_password.value, value)
+        _uiState.update { state ->
+            state.copy(
+                rePassword = FormField(
+                    value = value,
+                    validation = signUpUseCase.validateRePassword(state.password.value, value)
+                )
+            )
+        }
     }
 
+    /**
+     * Handles phone field changes
+     * Updates state immutably using copy()
+     */
     fun onPhoneChanged(value: String) {
-        _phone.value = value
-        _phoneValidation.value = signUpUseCase.validatePhone(value)
+        _uiState.update { state ->
+            state.copy(
+                phone = FormField(
+                    value = value,
+                    validation = signUpUseCase.validatePhone(value)
+                )
+            )
+        }
     }
 
-    // Final validation before submission (if needed)
-    fun isFormValid(): Boolean {
-        return listOf(
-            _fullNameValidation.value,
-            _emailValidation.value,
-            _passwordValidation.value,
-            _rePasswordValidation.value,
-            _phoneValidation.value
-        ).all { it is ValidationResult.Success }
+    /**
+     * Handles user type selection changes
+     * Updates state immutably using copy()
+     */
+    fun onUserTypeChanged(userType: UserType) {
+        _uiState.update { state ->
+            state.copy(userType = userType)
+        }
     }
 
+    /**
+     * Checks if entire form is valid
+     * Delegates to state object
+     */
+    fun isFormValid(): Boolean = _uiState.value.isValid()
 }

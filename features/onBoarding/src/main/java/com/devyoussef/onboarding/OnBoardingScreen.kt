@@ -55,6 +55,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.devyoussef.designsystem.AppFonts
 import com.devyoussef.designsystem.theme.SahetyTheme
 import com.devyoussef.onboarding.model.OnBoardingModel
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.supervisorScope
+import java.text.SimpleDateFormat
+import java.util.Date
 
 
 @Composable
@@ -308,4 +315,76 @@ private fun PreviewOnBoarding() {
         navigateToOnBoarding = {},
         navigateToIntro = {}
     )
+}
+
+fun main() = runBlocking {
+    println("=== Sequential ===")
+    sequentialExample()
+
+    println("\n=== Concurrent (Structured Concurrency) ===")
+    concurrentExample()
+
+    println("\n=== Concurrent (SupervisorScope) ===")
+    supervisorExample()
+}
+
+// --------------- Worker ---------------
+suspend fun someWork(name: String, shouldFail: Boolean = false): String {
+    val formattedTime = SimpleDateFormat("HH:mm:ss").format(Date())
+    println("$name started at $formattedTime on ${Thread.currentThread().name}")
+
+    delay(1000)
+
+    if (shouldFail) {
+        throw RuntimeException("💥 $name failed!")
+    }
+
+    return "✅ $name finished at ${SimpleDateFormat("HH:mm:ss").format(Date())}"
+}
+
+// --------------- Sequential ---------------
+suspend fun sequentialExample() {
+    try {
+        coroutineScope {
+            val first = async { someWork("One", shouldFail = true) }.await()
+            val second = async { someWork("Two") }.await()
+            val third = async { someWork("Three") }.await()
+
+            println(first)
+            println(second)
+            println(third)
+        }
+    } catch (e: Exception) {
+        println("Exception caught: $e")
+    }
+}
+
+// --------------- Concurrent (Structured Concurrency) ---------------
+suspend fun concurrentExample() {
+    try {
+        coroutineScope {
+            val first = async { someWork("One", shouldFail = true) }
+            val second = async { someWork("Two") }
+            val third = async { someWork("Three") }
+
+            println(first.await())
+            println(second.await())
+            println(third.await())
+        }
+    } catch (e: Exception) {
+        println("Exception caught: $e")
+    }
+}
+
+// --------------- Concurrent (SupervisorScope) ---------------
+suspend fun supervisorExample() {
+    supervisorScope {
+        val first = async { someWork("One", shouldFail = true) }
+        val second = async { someWork("Two") }
+        val third = async { someWork("Three") }
+
+        println(runCatching { first.await() }.getOrElse { "❌ One failed: $it" })
+        println(runCatching { second.await() }.getOrElse { "❌ Two failed: $it" })
+        println(runCatching { third.await() }.getOrElse { "❌ Three failed:$it"})
+        }
 }

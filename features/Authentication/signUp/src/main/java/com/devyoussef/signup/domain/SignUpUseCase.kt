@@ -1,51 +1,81 @@
 package com.devyoussef.signup.domain
 
-import com.devyoussef.designsystem.StringExtensions.errorIfBlank
-import com.devyoussef.designsystem.StringExtensions.errorIfEmailInvalid
-import com.devyoussef.designsystem.StringExtensions.errorIfLengthInvalid
-import com.devyoussef.designsystem.StringExtensions.errorIfPasswordInvalid
-import com.devyoussef.designsystem.StringExtensions.errorIfPhoneInvalid
+import com.devyoussef.signup.domain.validation.CompositeValidator
+import com.devyoussef.signup.domain.validation.ValidationResult
+import com.devyoussef.signup.domain.validation.validators.*
 import javax.inject.Inject
 
+/**
+ * Use Case for Sign Up validation
+ * Applies Strategy Pattern through validators
+ * Applies Dependency Inversion Principle (depends on Validator abstraction)
+ * Applies Open/Closed Principle (open for extension via new validators)
+ */
 class SignUpUseCase @Inject constructor() {
-    fun validateFullName(fullName: String): ValidationResult {
-        fullName.errorIfBlank("Full name")?.let { return ValidationResult.Error(it) }
-        fullName.errorIfLengthInvalid("Full name", min = 3, max = 50)
-            ?.let { return ValidationResult.Error(it) }
-        return ValidationResult.Success
-    }
-
-    fun validateEmail(email: String): ValidationResult {
-        email.errorIfBlank("Email")?.let { return ValidationResult.Error(it) }
-        email.errorIfLengthInvalid("Email", max = 50)?.let { return ValidationResult.Error(it) }
-        email.errorIfEmailInvalid()?.let { return ValidationResult.Error(it) }
-        return ValidationResult.Success
-    }
-
-    fun validatePassword(password: String): ValidationResult {
-        password.errorIfBlank("Password")?.let { return ValidationResult.Error(it) }
-        password.errorIfLengthInvalid("Password", min = 8, max = 120)
-            ?.let { return ValidationResult.Error(it) }
-        password.errorIfPasswordInvalid()?.let { return ValidationResult.Error(it) }
-        return ValidationResult.Success
-    }
-
-    fun validateRePassword(password: String, rePassword: String): ValidationResult {
-        return if (password != rePassword) {
-            ValidationResult.Error("Passwords do not match.")
-        } else ValidationResult.Success
-    }
-
-    fun validatePhone(phone: String): ValidationResult {
-        phone.errorIfBlank("Phone")?.let { return ValidationResult.Error(it) }
-        phone.errorIfPhoneInvalid()?.let { return ValidationResult.Error(it) }
-        return ValidationResult.Success
-    }
-}
-
-sealed class ValidationResult {
-    object Success : ValidationResult()
-    data class Error(val message: String) : ValidationResult()
-    object Default : ValidationResult()
-
+    
+    // Composite validators combining multiple validation rules
+    private val fullNameValidator = CompositeValidator(
+        listOf(
+            NotBlankValidator("Full name"),
+            LengthValidator("Full name", min = 3, max = 50)
+        )
+    )
+    
+    private val emailValidator = CompositeValidator(
+        listOf(
+            NotBlankValidator("Email"),
+            LengthValidator("Email", max = 50),
+            EmailValidator()
+        )
+    )
+    
+    private val passwordValidator = CompositeValidator(
+        listOf(
+            NotBlankValidator("Password"),
+            LengthValidator("Password", min = 8, max = 120),
+            PasswordValidator()
+        )
+    )
+    
+    private val phoneValidator = CompositeValidator(
+        listOf(
+            NotBlankValidator("Phone"),
+            PhoneValidator()
+        )
+    )
+    
+    /**
+     * Validates full name field
+     * Delegates to composite validator
+     */
+    fun validateFullName(fullName: String): ValidationResult = 
+        fullNameValidator.validate(fullName)
+    
+    /**
+     * Validates email field
+     * Delegates to composite validator
+     */
+    fun validateEmail(email: String): ValidationResult = 
+        emailValidator.validate(email)
+    
+    /**
+     * Validates password field
+     * Delegates to composite validator
+     */
+    fun validatePassword(password: String): ValidationResult = 
+        passwordValidator.validate(password)
+    
+    /**
+     * Validates re-password field matches original password
+     * Uses dynamic password matching validator
+     */
+    fun validateRePassword(password: String, rePassword: String): ValidationResult = 
+        PasswordMatchValidator { password }.validate(rePassword)
+    
+    /**
+     * Validates phone number field
+     * Delegates to composite validator
+     */
+    fun validatePhone(phone: String): ValidationResult = 
+        phoneValidator.validate(phone)
 }
