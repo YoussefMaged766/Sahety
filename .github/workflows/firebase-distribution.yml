@@ -51,11 +51,6 @@ jobs:
         with:
           credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}
 
-      # Upload to Firebase App Distribution
-      - name: Upload artifact to Firebase App Distribution
-        uses: google-github-actions/upload-cloud-storage@v2
-        continue-on-error: true
-
       # Alternative: Use Firebase CLI with proper authentication
       - name: Distribute to Firebase App Distribution
         run: |
