@@ -51,7 +51,7 @@ fun SahetyTextField(
     onValueChange: (String) -> Unit,
     leadingIcon: @Composable (() -> Unit)? = null,
     label: String,
-    imeAction: ImeAction,
+    imeAction: ImeAction = ImeAction.Next,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     singleLine: Boolean = true,
     isPassword: Boolean = false,
